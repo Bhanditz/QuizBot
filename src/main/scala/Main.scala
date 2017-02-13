@@ -53,13 +53,32 @@ object Main extends App{
   val quizLangParser = new QuizBotLanguage
   val quizLang = quizLangParser.language
 
-  val newQuizCommand = "new quiz testquiz"
+  val newQuizCommand = "new quiz testquiz user=robert"
   val makeQuizCommand = "make quiz testquiz-2"
+  val addQuestionCommand = "testquiz question How tall is Angela Merkel?"
+  val addAnswerCommand = "testquiz add answer B me=robert"
+  val publishCommand = "publish testquiz"
+  val evaluateCommand = "eval testquiz"
+  val quizzesCommand = "get quizzes"
+  val scoreboardCommand = "get scoreboard"
 
   val result = quizLangParser.parse(quizLang, newQuizCommand)
   val result2 = quizLangParser.parse(quizLang, makeQuizCommand)
+  val result3 = quizLangParser.parse(quizLang, addQuestionCommand)
+  val result4 = quizLangParser.parse(quizLang, addAnswerCommand)
+  val result5 = quizLangParser.parse(quizLang, publishCommand)
+  val result6 = quizLangParser.parse(quizLang, evaluateCommand)
+  val result7 = quizLangParser.parse(quizLang, quizzesCommand)
+  val result8 = quizLangParser.parse(quizLang, scoreboardCommand)
 
   println(result)
   println(result2)
+  println(result3)
+  println(result4)
+  println(result5)
+  println(result6)
+  println(result7)
+  println(result8)
+
 
 }

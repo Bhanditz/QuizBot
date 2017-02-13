@@ -41,8 +41,8 @@ class QuizBotLanguage extends RegexParsers{
 
   def evaluateQuiz = ("eval"|"evaluate"|"remove"|"kill") ~> word ^^ {quizName => EvaluateQuiz(quizName)}
 
-  def getPublishedQuizzes = ("get published quizzes"|"quizzes"|"published quizzes") <~ opt(withUser) ^^  {_=> GetPublishedQuizzes}
-  def getScoreboard = ("get scoreboard"|"scoreboard"|"scores"|"score") <~ opt(withUser) ^^ {_=> GetScoreboard}
+  def getPublishedQuizzes = opt("get") ~> ("quizzes"|"published quizzes") <~ opt(withUser) ^^  {_=> GetPublishedQuizzes}
+  def getScoreboard = opt("get") ~> ("scoreboard"|"scoreboard"|"scores"|"score") <~ opt(withUser) ^^ {_=> GetScoreboard}
 
   def withUser: Parser[String] = user ~> opt("=") ~> word
   def user = ("me"|"username"|"user")
