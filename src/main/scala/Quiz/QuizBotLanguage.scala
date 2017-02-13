@@ -15,6 +15,8 @@ class QuizBotLanguage extends RegexParsers{
   GetPublishedQuizzes, GetScoreboard}
 
   /*=====PRODUCTION RULES=====*/
+  def language = newQuiz|addQuizQuestion|addQuizAnswers|answerQuiz|publishQuiz|evaluateQuiz|getPublishedQuizzes|getScoreboard
+
   def newQuiz = ("new quiz"|"make quiz") ~> word ^^ {quizName => NewQuiz(quizName)}
 
   def addQuizQuestion = word ~ opt("with" | "add") ~ "question" ~ opt("=") ~ anyString <~ opt(withUser) ^^ {
@@ -24,9 +26,9 @@ class QuizBotLanguage extends RegexParsers{
     case (quizName ~ _ ~ _ ~ _ ~ answers) => AddQuizAnswers(quizName, answers)
   }
 
-  def quizAnswers: Parser[List[Answer]] = repsep((charOrInt ~ anyString ~ opt(boolean)), " " ) <~ opt(withUser) ^^ { list =>
+  def quizAnswers: Parser[List[Answer]] = repsep((charOrInt ~ anyString ~  opt(boolean)), " " ) <~ opt(withUser) ^^ { list =>
     list.map({
-      case (ci ~ answer ~ Some(b)) => (ci, answer, b)
+      case (ci ~ answer ~  Some(b)) => (ci, answer, b)
       case (ci ~ answer ~ None) => (ci, answer, false)
     })
   }
@@ -45,7 +47,7 @@ class QuizBotLanguage extends RegexParsers{
   def withUser: Parser[String] = user ~> opt("=") ~> word
   def user = ("me"|"username"|"user")
   def anyString: Parser[String] = """.*""".r ^^ {_.toString}
-  def word: Parser[String]    = """[a-z]+""".r ^^ { _.toString }
+  def word: Parser[String]    = """[a-zA-Z1-9_:-]+""".r ^^ { _.toString }
   def charOrInt: Parser[Either[Int, Char]] = integer ^^ {i => Left(i)}|character ^^ {c => Right(c)}
   def character: Parser[Char] = """[a-zA-Z]""".r ^^ {_.charAt(0)}
   def integer: Parser[Int] =  """\d+""".r ^^ { _.toInt}

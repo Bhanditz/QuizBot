@@ -4,21 +4,21 @@ import Quiz._
 import akka.actor.{ActorSystem, Props}
 import akka.pattern._
 import akka.util.Timeout
+
+import scala.util.Success
 //import Quiz.QuizActor._
 import Quiz._
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
-import scalaz._
-
 /**
   * Created by robertMueller on 30.01.17.
   */
 object Main extends App{
   implicit val timeout = Timeout(2.seconds)
-  val quizSystem = ActorSystem("SimpleSystem")
+  /*val quizSystem = ActorSystem("SimpleSystem")
   val quizActor = quizSystem.actorOf(Props[QuizActor], "Quiz-Actor")
-  quizActor ! NewQuiz("test-Quiz", "robert")
+  quizActor ! NewQuiz("test-Quiz")
   quizActor ! AddQuizQuestion("test-Quiz", "How big is china?")
   val answers = List(
     (Left(1), "12.000.000 km^2", false), (Left(2), "9.560.000 km^2", true)
@@ -36,7 +36,7 @@ object Main extends App{
 
   val eval = quizActor ? EvaluateQuiz("test-Quiz")
   val scoreboard = quizActor ? GetScoreboard
-  scoreboard.foreach(println)
+  scoreboard.foreach(println)*/
 
   /*val manager = QuizManager()
   val qname = "tonald_drump"
@@ -49,4 +49,17 @@ object Main extends App{
   /*val myQuiz = quizInit flatMap(withName("plotics")) flatMap(withQuestion("How tall is Angela Merkel?"))
   val quiz = myQuiz.run(QuizState())
   println(quiz._1)*/
+
+  val quizLangParser = new QuizBotLanguage
+  val quizLang = quizLangParser.language
+
+  val newQuizCommand = "new quiz testquiz"
+  val makeQuizCommand = "make quiz testquiz-2"
+
+  val result = quizLangParser.parse(quizLang, newQuizCommand)
+  val result2 = quizLangParser.parse(quizLang, makeQuizCommand)
+
+  println(result)
+  println(result2)
+
 }

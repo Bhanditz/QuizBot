@@ -15,6 +15,7 @@ import QuizManager._
   */
 
 object QuizActor{
+  //case class setTrueAnswer(quizName: String, trueAnswer: Either[Int, Char])
   case class RequestQuizInfo(name: String)
   case class ResponseQuizInfo(quiz: Map[String,Quiz])
   case class RequestPendingQuizzes(name: String)
