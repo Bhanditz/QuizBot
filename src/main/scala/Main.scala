@@ -1,6 +1,7 @@
 import Quiz.QuizActor._
 import Quiz.QuizManager._
 import Quiz._
+import UserGeneratedInfo.UserGeneratedInfoLanguage
 import akka.actor.{ActorSystem, Props}
 import akka.pattern._
 import akka.util.Timeout
@@ -79,6 +80,26 @@ object Main extends App{
   println(result6)
   println(result7)
   println(result8)
+
+
+  val userGeneratedInfoLangParser = new UserGeneratedInfoLanguage
+  val userGeneratedInfoLang = userGeneratedInfoLangParser.language
+
+  val addProposalCommand = "create info name=pruefung_scala info=23.02.2017"
+  val upvoteCommand = "upvote pruefung_scala user = robert"
+  val downvoteCommand = "- pruefung_scala user = robert"
+  val deleteCommand = "delete pruefung_scala"
+
+  val result9 = userGeneratedInfoLangParser.parse(userGeneratedInfoLang, addProposalCommand)
+  val result10 = userGeneratedInfoLangParser.parse(userGeneratedInfoLang, upvoteCommand)
+  val result11 = userGeneratedInfoLangParser.parse(userGeneratedInfoLang, downvoteCommand)
+  val result12 = userGeneratedInfoLangParser.parse(userGeneratedInfoLang, deleteCommand)
+
+  println(result9)
+  println(result10)
+  println(result11)
+  println(result12)
+
 
 
 }
