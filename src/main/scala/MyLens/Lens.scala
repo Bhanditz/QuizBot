@@ -15,3 +15,14 @@ case class MyLens[A,B](get: A => B, set: (A,B) => A) extends Function1[A, B] wit
   // get -> get/set
   def andThen[C](that: MyLens[B,C]) = that compose this
 }
+
+object MyLens {
+
+  def containsKey[A,B](key: A) = MyLens[Map[A,B], Option[B]](
+    get = (m: Map[A,B]) => m.get(key),
+    set = (m:Map[A,B], opt: Option[B]) =>
+      opt match {
+        case None => m - key
+        case Some(value) => m + (key -> value)
+      })
+}

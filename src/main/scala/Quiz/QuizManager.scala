@@ -3,6 +3,7 @@ package Quiz
 import scalaz._
 import Types._
 import MyLens._
+import MyLens.containsKey
 
 
 
@@ -33,13 +34,6 @@ object QuizManager{
     set = (qm: QuizManager, s: Map[String, Int]) => qm.copy(scoreboard = s)
   )
 
-  def containsKey[A,B](key: A) = MyLens[Map[A,B], Option[B]](
-    get = (m: Map[A,B]) => m.get(key),
-    set = (m:Map[A,B], opt: Option[B]) =>
-      opt match {
-      case None => m - key
-      case Some(value) => m + (key -> value)
-    })
 
   def quizScoreboardLens(key: String) = scoreboardLens andThen containsKey[String, Int](key)
   def quizInPendingQuizzesLens(key: String) = pendingQuizzesLens andThen containsKey[String,  State[QuizState, Quiz]](key)

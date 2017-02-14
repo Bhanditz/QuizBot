@@ -15,7 +15,9 @@ import QuizManager._
   */
 
 object QuizActor{
-  //case class setTrueAnswer(quizName: String, trueAnswer: Either[Int, Char])
+  /*=====MESSAGES=====*/
+  //case class SetTrueAnswer(quizName: String, trueAnswer: Either[Int, Char]) //TODO
+  //case class BotInstructionManual
   case class RequestQuizInfo(name: String)
   case class ResponseQuizInfo(quiz: Map[String,Quiz])
   case class RequestPendingQuizzes(name: String)
@@ -39,9 +41,6 @@ object QuizActor{
   case object NoSuchQuiz
   case object NoSuchAnswer
 }
-
-/*=====QuizActorState=====*/
-//TODO
 
 class QuizActor extends Actor{
 
